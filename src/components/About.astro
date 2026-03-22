@@ -1,0 +1,147 @@
+---
+---
+
+<section id="a-propos">
+  <div class="container">
+    <div class="image-col">
+      <img src="/bien-etre.jpg" alt="Bien-être" class="about-img" />
+      <div class="deco-leaf">✦</div>
+    </div>
+
+    <div class="text-col">
+      <p class="eyebrow">À propos</p>
+      <h2>Un accompagnement<br /><em>au cœur de votre être</em></h2>
+      <p>
+        Kinésiologue certifiée et Maître Reiki, je vous accueille à Fayence dans un cadre
+        doux et bienveillant. Ma pratique s'articule autour d'une conviction profonde :
+        le corps sait. Il porte en lui la mémoire de vos émotions, de vos blocages,
+        de vos ressources.
+      </p>
+      <p>
+        Mon rôle est de vous aider à rétablir un dialogue entre votre corps et votre
+        esprit, pour retrouver équilibre, vitalité et sérénité — à votre rythme,
+        en toute confiance.
+      </p>
+      <div class="values">
+        <div class="value">
+          <span class="icon">✦</span>
+          <p>Écoute &amp; bienveillance</p>
+        </div>
+        <div class="value">
+          <span class="icon">✦</span>
+          <p>Accompagnement personnalisé</p>
+        </div>
+        <div class="value">
+          <span class="icon">✦</span>
+          <p>Approche holistique</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    background: var(--color-beige);
+    padding: 6rem 2rem;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+  }
+
+  .image-col {
+    flex: 1;
+    max-width: 380px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .about-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .deco-leaf {
+    position: absolute;
+    bottom: -1rem;
+    right: -1rem;
+    font-size: 2.5rem;
+    color: var(--color-gold);
+    opacity: 0.6;
+  }
+
+  .text-col {
+    flex: 1;
+  }
+
+  .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--color-green-dark);
+    margin-bottom: 1.5rem;
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--color-green);
+  }
+
+  p {
+    color: var(--color-text-light);
+    margin-bottom: 1.2rem;
+    font-size: 0.98rem;
+  }
+
+  .values {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: 2rem;
+    border-left: 2px solid var(--color-gold-light);
+    padding-left: 1.5rem;
+  }
+
+  .value {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .icon {
+    color: var(--color-gold);
+    font-size: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .value p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .image-col {
+      max-width: 240px;
+      margin: 0 auto;
+    }
+  }
+</style>

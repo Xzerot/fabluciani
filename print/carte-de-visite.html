@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Carte de visite – Fabienne Luciani – PRINT READY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Variables ────────────────────────────────────────────── */
+    :root {
+      --green-dark:   #4A6741;
+      --green:        #6B8F63;
+      --green-light:  #A8C5A0;
+      --green-pale:   #E8F0E6;
+      --gold:         #C9A96E;
+      --gold-light:   #E8D5B0;
+      --beige:        #F5EFE4;
+      --white:        #FAFAF7;
+      --text:         #3D4A3D;
+      --text-light:   #6B7A6B;
+
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Lato', Arial, sans-serif;
+
+      /* Dimensions en mm */
+      --bleed: 3mm;
+      --card-w: 85mm;
+      --card-h: 55mm;
+      --total-w: calc(var(--card-w) + var(--bleed) * 2); /* 91mm */
+      --total-h: calc(var(--card-h) + var(--bleed) * 2); /* 61mm */
+      --mark-len: 5mm;
+      --mark-gap: 2mm;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Page A4 paysage ──────────────────────────────────────── */
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+
+    html, body {
+      width: 297mm;
+      height: 210mm;
+      background: #EFEFEC;
+      font-family: var(--font-sans);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16mm;
+    }
+
+    /* ─── Zone d'impression ────────────────────────────────────── */
+    .print-area {
+      display: flex;
+      gap: 18mm;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── Conteneur carte + traits de coupe ───────────────────── */
+    .card-wrap {
+      position: relative;
+      /* Largeur = carte + bleed + espace pour les traits */
+      width: calc(var(--total-w) + (var(--mark-len) + var(--mark-gap)) * 2);
+      height: calc(var(--total-h) + (var(--mark-len) + var(--mark-gap)) * 2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Traits de coupe — 8 segments (2 par coin) */
+    .card-wrap::before,
+    .card-wrap::after,
+    .card-wrap .mark-tl2,
+    .card-wrap .mark-tr1,
+    .card-wrap .mark-tr2,
+    .card-wrap .mark-bl1,
+    .card-wrap .mark-bl2,
+    .card-wrap .mark-br1,
+    .card-wrap .mark-br2 { content: ''; position: absolute; background: #000; }
+
+    /* Coin haut-gauche — horizontal */
+    .mark-tl-h {
+      top: var(--mark-gap);
+      left: 0;
+      width: var(--mark-len);
+      height: 0.25mm;
+    }
+    /* Coin haut-gauche — vertical */
+    .mark-tl-v {
+      top: 0;
+      left: var(--mark-gap);
+      width: 0.25mm;
+      height: var(--mark-len);
+    }
+    /* Coin haut-droit — horizontal */
+    .mark-tr-h {
+      top: var(--mark-gap);
+      right: 0;
+      width: var(--mark-len);
+      height: 0.25mm;
+    }
+    /* Coin haut-droit — vertical */
+    .mark-tr-v {
+      top: 0;
+      right: var(--mark-gap);
+      width: 0.25mm;
+      height: var(--mark-len);
+    }
+    /* Coin bas-gauche — horizontal */
+    .mark-bl-h {
+      bottom: var(--mark-gap);
+      left: 0;
+      width: var(--mark-len);
+      height: 0.25mm;
+    }
+    /* Coin bas-gauche — vertical */
+    .mark-bl-v {
+      bottom: 0;
+      left: var(--mark-gap);
+      width: 0.25mm;
+      height: var(--mark-len);
+    }
+    /* Coin bas-droit — horizontal */
+    .mark-br-h {
+      bottom: var(--mark-gap);
+      right: 0;
+      width: var(--mark-len);
+      height: 0.25mm;
+    }
+    /* Coin bas-droit — vertical */
+    .mark-br-v {
+      bottom: 0;
+      right: var(--mark-gap);
+      width: 0.25mm;
+      height: var(--mark-len);
+    }
+
+    /* ─── Carte (fond perdu inclus) ────────────────────────────── */
+    .card {
+      width: var(--total-w);
+      height: var(--total-h);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Zone sécurisée (aide visuelle à l'écran, masquée à l'impression) */
+    .safe-zone {
+      position: absolute;
+      top: calc(var(--bleed) + 3mm);
+      left: calc(var(--bleed) + 3mm);
+      right: calc(var(--bleed) + 3mm);
+      bottom: calc(var(--bleed) + 3mm);
+      border: 0.3px dashed rgba(255,0,0,0.25);
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* Ligne de coupe (aide visuelle) */
+    .trim-line {
+      position: absolute;
+      top: var(--bleed);
+      left: var(--bleed);
+      right: var(--bleed);
+      bottom: var(--bleed);
+      border: 0.3px dashed rgba(0,0,0,0.2);
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* ─── RECTO ────────────────────────────────────────────────── */
+    .recto {
+      background: var(--white);
+    }
+
+    .recto-bg-circle-1 {
+      position: absolute;
+      top: -12mm;
+      right: -12mm;
+      width: 42mm;
+      height: 42mm;
+      border-radius: 50%;
+      background: var(--green-pale);
+      opacity: 0.8;
+    }
+
+    .recto-bg-circle-2 {
+      position: absolute;
+      bottom: -10mm;
+      right: 5mm;
+      width: 28mm;
+      height: 28mm;
+      border-radius: 50%;
+      background: var(--gold-light);
+      opacity: 0.35;
+    }
+
+    .gold-bar {
+      position: absolute;
+      left: var(--bleed);
+      top: 0;
+      bottom: 0;
+      width: 1.2mm;
+      background: linear-gradient(to bottom, var(--gold), var(--green-light));
+      z-index: 2;
+    }
+
+    .recto-content {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      /* padding = bleed + marge interne */
+      padding: calc(var(--bleed) + 4mm) calc(var(--bleed) + 4mm) calc(var(--bleed) + 4mm) calc(var(--bleed) + 6mm);
+    }
+
+    .eyebrow {
+      font-family: var(--font-sans);
+      font-size: 5pt;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+      margin-bottom: 1.5mm;
+    }
+
+    .name {
+      font-family: var(--font-serif);
+      font-size: 22pt;
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--green-dark);
+    }
+
+    .name em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .contact-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5mm;
+    }
+
+    .contact-line {
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+      color: var(--text-light);
+    }
+
+    .contact-line svg {
+      flex-shrink: 0;
+      color: var(--green);
+    }
+
+    .contact-line span {
+      font-family: var(--font-sans);
+      font-size: 6.5pt;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── VERSO ────────────────────────────────────────────────── */
+    .verso {
+      background: var(--green-dark);
+    }
+
+    .verso-radial-1 {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 80%, rgba(201,169,110,0.2) 0%, transparent 55%);
+    }
+    .verso-radial-2 {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 15%, rgba(168,197,160,0.15) 0%, transparent 50%);
+    }
+
+    .verso-content {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5mm;
+      padding: calc(var(--bleed) + 3mm);
+      text-align: center;
+    }
+
+    .monogram {
+      font-family: var(--font-serif);
+      font-size: 26pt;
+      font-weight: 300;
+      color: var(--gold-light);
+      letter-spacing: 0.14em;
+      line-height: 1;
+    }
+
+    .tagline {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 7pt;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.65;
+    }
+
+    .deco {
+      color: var(--gold);
+      font-size: 7pt;
+      opacity: 0.65;
+      letter-spacing: 0.3em;
+    }
+
+    .verso-sub {
+      font-family: var(--font-sans);
+      font-size: 5pt;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      opacity: 0.65;
+      font-weight: 300;
+    }
+
+    /* ─── Label écran ──────────────────────────────────────────── */
+    .label {
+      font-family: var(--font-sans);
+      font-size: 8pt;
+      color: #888;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2mm;
+      text-align: center;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ─── Légende de référence ─────────────────────────────────── */
+    .legend {
+      font-family: var(--font-sans);
+      font-size: 7pt;
+      color: #666;
+      text-align: center;
+      line-height: 1.7;
+    }
+    .legend strong { color: #333; }
+
+    /* ─── Print overrides ──────────────────────────────────────── */
+    @media print {
+      html, body {
+        background: white;
+      }
+
+      .label,
+      .legend,
+      .safe-zone {
+        display: none;
+      }
+
+      .trim-line {
+        border-color: rgba(0,0,0,0.15);
+      }
+
+      .card,
+      .recto,
+      .verso,
+      .gold-bar,
+      .recto-bg-circle-1,
+      .recto-bg-circle-2,
+      .verso-radial-1,
+      .verso-radial-2 {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-area">
+
+    <!-- ── RECTO ─────────────────────────────────── -->
+    <div class="col">
+      <p class="label">Recto</p>
+      <div class="card-wrap">
+        <!-- Traits de coupe -->
+        <div class="mark-tl-h" style="position:absolute;top:5mm;left:0;width:5mm;height:0.25mm;background:#000;"></div>
+        <div class="mark-tl-v" style="position:absolute;top:0;left:5mm;width:0.25mm;height:5mm;background:#000;"></div>
+        <div class="mark-tr-h" style="position:absolute;top:5mm;right:0;width:5mm;height:0.25mm;background:#000;"></div>
+        <div class="mark-tr-v" style="position:absolute;top:0;right:5mm;width:0.25mm;height:5mm;background:#000;"></div>
+        <div class="mark-bl-h" style="position:absolute;bottom:5mm;left:0;width:5mm;height:0.25mm;background:#000;"></div>
+        <div class="mark-bl-v" style="position:absolute;bottom:0;left:5mm;width:0.25mm;height:5mm;background:#000;"></div>
+        <div class="mark-br-h" style="position:absolute;bottom:5mm;right:0;width:5mm;height:0.25mm;background:#000;"></div>
+        <div class="mark-br-v" style="position:absolute;bottom:0;right:5mm;width:0.25mm;height:5mm;background:#000;"></div>
+
+        <div class="card recto">
+          <div class="trim-line"></div>
+          <div class="safe-zone"></div>
+
+          <div class="recto-bg-circle-1"></div>
+          <div class="recto-bg-circle-2"></div>
+          <div class="gold-bar"></div>
+
+          <div class="recto-content">
+            <div class="top">
+              <p class="eyebrow">Kinésiologue &amp; Maître Reiki</p>
+              <p class="name">Fabienne<br /><em>Luciani</em></p>
+            </div>
+            <div class="contact-block">
+              <div class="contact-line">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="9" height="9">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                <span>06 33 73 87 64</span>
+              </div>
+              <div class="contact-line">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="9" height="9">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>Fayence, Var (83)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── VERSO ─────────────────────────────────── -->
+    <div class="col">
+      <p class="label">Verso</p>
+      <div class="card-wrap">
+        <!-- Traits de coupe -->
+        <div style="position:absolute;top:5mm;left:0;width:5mm;height:0.25mm;background:#000;"></div>
+        <div style="position:absolute;top:0;left:5mm;width:0.25mm;height:5mm;background:#000;"></div>
+        <div style="position:absolute;top:5mm;right:0;width:5mm;height:0.25mm;background:#000;"></div>
+        <div style="position:absolute;top:0;right:5mm;width:0.25mm;height:5mm;background:#000;"></div>
+        <div style="position:absolute;bottom:5mm;left:0;width:5mm;height:0.25mm;background:#000;"></div>
+        <div style="position:absolute;bottom:0;left:5mm;width:0.25mm;height:5mm;background:#000;"></div>
+        <div style="position:absolute;bottom:5mm;right:0;width:5mm;height:0.25mm;background:#000;"></div>
+        <div style="position:absolute;bottom:0;right:5mm;width:0.25mm;height:5mm;background:#000;"></div>
+
+        <div class="card verso">
+          <div class="trim-line"></div>
+          <div class="safe-zone"></div>
+
+          <div class="verso-radial-1"></div>
+          <div class="verso-radial-2"></div>
+
+          <div class="verso-content">
+            <p class="monogram">FL</p>
+            <p class="tagline">
+              &laquo;&nbsp;Un espace de soin,<br />d'écoute et d'équilibre.&nbsp;&raquo;
+            </p>
+            <p class="deco">✦</p>
+            <p class="verso-sub">Kinésiologie &amp; Reiki — Fayence</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Légende technique -->
+  <p class="legend">
+    <strong>Fond perdu :</strong> 3 mm de chaque côté &nbsp;|&nbsp;
+    <strong>Format final :</strong> 85 × 55 mm &nbsp;|&nbsp;
+    <strong>Résolution recommandée :</strong> 300 dpi &nbsp;|&nbsp;
+    <strong>Export :</strong> Fichier › Imprimer › Enregistrer en PDF (Chrome/Edge)
+  </p>
+
+</body>
+</html>

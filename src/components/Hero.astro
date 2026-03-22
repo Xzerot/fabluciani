@@ -1,0 +1,126 @@
+---
+---
+
+<section class="hero">
+  <div class="hero-content">
+    <p class="eyebrow">Kinésiologue &amp; Maître Reiki</p>
+    <h1>Fabienne<br /><em>Luciani</em></h1>
+    <p class="subtitle">
+      Un espace de soin, d'écoute et d'équilibre pour retrouver votre harmonie intérieure.
+    </p>
+    <a href="#contact" class="btn">Prendre contact</a>
+  </div>
+  <div class="hero-image">
+    <img src="/presentation.jpg" alt="Fabienne Luciani" class="hero-img" />
+    <div class="deco-circle"></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    padding: 8rem 2rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-content {
+    flex: 1;
+    max-width: 520px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1.2rem;
+    font-weight: 400;
+  }
+
+  h1 {
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+    color: var(--color-green-dark);
+    margin-bottom: 1.5rem;
+    line-height: 1.05;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--color-green);
+  }
+
+  .subtitle {
+    font-size: 1.05rem;
+    color: var(--color-text-light);
+    margin-bottom: 2.5rem;
+    max-width: 400px;
+    line-height: 1.8;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.9rem 2.2rem;
+    background: var(--color-green);
+    color: #fff;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.25s, transform 0.2s;
+  }
+
+  .btn:hover {
+    background: var(--color-green-dark);
+    transform: translateY(-1px);
+  }
+
+  .hero-image {
+    flex: 1;
+    max-width: 420px;
+    position: relative;
+  }
+
+  .hero-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: 200px 200px 180px 180px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .deco-circle {
+    position: absolute;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--color-gold-light);
+    opacity: 0.4;
+    bottom: -5%;
+    right: -8%;
+    z-index: 0;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      flex-direction: column-reverse;
+      text-align: center;
+      gap: 2.5rem;
+      padding-top: 6rem;
+    }
+
+    .subtitle {
+      margin: 0 auto 2rem;
+    }
+
+    .hero-image {
+      max-width: 280px;
+    }
+  }
+</style>

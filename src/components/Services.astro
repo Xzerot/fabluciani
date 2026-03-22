@@ -1,0 +1,179 @@
+---
+---
+
+<section id="services">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Mes services</p>
+      <h2>Des soins pour <em>votre équilibre</em></h2>
+      <p class="intro">
+        Chaque séance est un moment dédié à vous, dans un espace sécurisant et confidentiel.
+      </p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-image">
+          <img src="/kinesiologie.jpg" alt="Kinésiologie" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3>Kinésiologie</h3>
+          <p>
+            La kinésiologie est une approche naturelle qui utilise le test musculaire pour
+            identifier et libérer les blocages émotionnels, mentaux et physiques.
+            Elle permet de retrouver votre harmonie intérieure et de mobiliser vos
+            ressources pour avancer sereinement.
+          </p>
+          <ul>
+            <li>Gestion du stress et des émotions</li>
+            <li>Confiance en soi &amp; clarté mentale</li>
+            <li>Accompagnement des transitions de vie</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card card--gold">
+        <div class="card-image">
+          <img src="/reiki.jpg" alt="Soin Reiki" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3>Soin Reiki</h3>
+          <p>
+            Le Reiki est une technique de soin énergétique douce qui favorise la
+            détente profonde et la circulation de l'énergie vitale. En tant que
+            Maître Reiki, j'accompagne votre retour à l'équilibre avec douceur
+            et présence bienveillante.
+          </p>
+          <ul>
+            <li>Relaxation profonde &amp; lâcher-prise</li>
+            <li>Rééquilibrage énergétique</li>
+            <li>Soutien en période de fatigue ou de changement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 6rem 2rem;
+    background: var(--color-white);
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--color-green-dark);
+    margin-bottom: 1rem;
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--color-green);
+  }
+
+  .intro {
+    color: var(--color-text-light);
+    max-width: 480px;
+    margin: 0 auto;
+    font-size: 0.98rem;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .card {
+    background: var(--color-green-pale);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(74, 103, 65, 0.12);
+  }
+
+  .card--gold {
+    background: #FAF3E8;
+  }
+
+  .card-image {
+    width: 100%;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card-body {
+    padding: 2rem;
+  }
+
+  h3 {
+    font-family: var(--font-serif);
+    font-size: 1.7rem;
+    color: var(--color-green-dark);
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 0.92rem;
+    color: var(--color-text-light);
+    margin-bottom: 1.2rem;
+    line-height: 1.8;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  ul li {
+    font-size: 0.85rem;
+    color: var(--color-text);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  ul li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--color-gold);
+    font-size: 0.5rem;
+    top: 0.35em;
+  }
+
+  @media (max-width: 640px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
